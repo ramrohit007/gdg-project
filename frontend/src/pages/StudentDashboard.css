@@ -1,0 +1,200 @@
+.dashboard-container {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 20px;
+}
+
+.dashboard-header {
+  background: white;
+  border-radius: 12px;
+  padding: 20px 30px;
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.dashboard-header h1 {
+  color: #667eea;
+  margin: 0;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.user-info span {
+  color: #333;
+  font-weight: 500;
+}
+
+.logout-btn {
+  padding: 8px 20px;
+  background: #f44336;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background 0.3s;
+}
+
+.logout-btn:hover {
+  background: #d32f2f;
+}
+
+.dashboard-content {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.dashboard-section {
+  background: white;
+  border-radius: 12px;
+  padding: 30px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.dashboard-section h2 {
+  color: #333;
+  margin-bottom: 15px;
+  font-size: 1.5rem;
+}
+
+.section-description {
+  color: #666;
+  margin-bottom: 25px;
+  line-height: 1.6;
+}
+
+.upload-section {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.file-upload-label {
+  display: inline-block;
+}
+
+.file-input {
+  display: none;
+}
+
+.file-upload-button {
+  display: inline-block;
+  padding: 16px 40px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 1.1rem;
+  transition: transform 0.2s;
+  text-align: center;
+}
+
+.file-upload-button:hover:not(:disabled) {
+  transform: translateY(-2px);
+}
+
+.file-upload-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.upload-message {
+  padding: 12px;
+  border-radius: 8px;
+  font-weight: 500;
+}
+
+.upload-message.success {
+  background: #e8f5e9;
+  color: #2e7d32;
+}
+
+.upload-message.error {
+  background: #ffebee;
+  color: #c62828;
+}
+
+.scores-display {
+  margin-top: 30px;
+  padding-top: 30px;
+  border-top: 2px solid #e0e0e0;
+}
+
+.scores-display h3 {
+  color: #333;
+  margin-bottom: 20px;
+  font-size: 1.3rem;
+}
+
+.scores-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 20px;
+}
+
+.score-card {
+  background: #f9f9f9;
+  border-radius: 8px;
+  padding: 20px;
+  border: 1px solid #e0e0e0;
+}
+
+.score-topic {
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 10px;
+  font-size: 1rem;
+}
+
+.score-value {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #667eea;
+  margin-bottom: 10px;
+}
+
+.score-bar {
+  width: 100%;
+  height: 8px;
+  background: #e0e0e0;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.score-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+  transition: width 0.3s;
+}
+
+.instructions-list {
+  list-style: none;
+  padding: 0;
+}
+
+.instructions-list li {
+  padding: 12px 0;
+  padding-left: 30px;
+  position: relative;
+  color: #666;
+  line-height: 1.6;
+}
+
+.instructions-list li:before {
+  content: "✓";
+  position: absolute;
+  left: 0;
+  color: #667eea;
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
