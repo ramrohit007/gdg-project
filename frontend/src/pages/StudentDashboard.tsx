@@ -7,7 +7,6 @@ function StudentDashboard() {
   const { user, logout } = useAuth()
   const [uploading, setUploading] = useState(false)
   const [uploadMessage, setUploadMessage] = useState('')
-  const [scores, setScores] = useState<Record<string, number> | null>(null)
 
   const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]
@@ -26,10 +25,8 @@ function StudentDashboard() {
         },
       })
       setUploadMessage('Answer sheet uploaded and analyzed successfully!')
-      setScores(response.data.scores)
     } catch (error: any) {
       setUploadMessage(`Error: ${error.response?.data?.detail || 'Upload failed'}`)
-      setScores(null)
     } finally {
       setUploading(false)
       e.target.value = '' // Reset input
@@ -73,26 +70,6 @@ function StudentDashboard() {
                 {uploadMessage}
               </div>
             )}
-
-            {scores && (
-              <div className="scores-display">
-                <h3>Your Topic Scores</h3>
-                <div className="scores-grid">
-                  {Object.entries(scores).map(([topic, score]) => (
-                    <div key={topic} className="score-card">
-                      <div className="score-topic">{topic}</div>
-                      <div className="score-value">{score.toFixed(1)}%</div>
-                      <div className="score-bar">
-                        <div 
-                          className="score-bar-fill" 
-                          style={{ width: `${score}%` }}
-                        ></div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
           </div>
         </div>
 
@@ -103,7 +80,7 @@ function StudentDashboard() {
             <li>The PDF should contain clear, readable text</li>
             <li>Upload one answer sheet at a time</li>
             <li>Wait for the analysis to complete before uploading another</li>
-            <li>Your scores will be displayed after successful upload</li>
+            <li>Your answers will be analyzed and stored in the system</li>
           </ul>
         </div>
       </div>

@@ -11,7 +11,7 @@ from database import SessionLocal, engine, Base
 from models import User, LoginCode, Syllabus, AnswerSheet, Topic, StudentTopicScore
 from schemas import (
     UserLogin, UserResponse, CodeResponse, 
-    SyllabusUpload, AnswerUpload, TopicScore, AnalyticsResponse
+    SyllabusUpload, AnswerUpload, AnalyticsResponse
 )
 from auth import verify_password, get_password_hash, create_access_token, verify_token
 from pdf_processor import PDFProcessor
@@ -262,7 +262,7 @@ def upload_answer(
         # Clean up file
         os.remove(file_path)
         
-        return {"message": "Answer sheet uploaded and analyzed successfully", "scores": topic_scores}
+        return {"message": "Answer sheet uploaded and analyzed successfully"}
     
     except Exception as e:
         if os.path.exists(file_path):
@@ -271,7 +271,7 @@ def upload_answer(
 
 @app.get("/api/teacher/analytics", response_model=AnalyticsResponse)
 def get_analytics(current_user: User = Depends(get_current_user), db: Session = Depends(get_db)):
-    """Get analytics for teacher dashboard"""
+    """Get analytics for teacher dashboard - returns average scores per topic"""
     if current_user.role != "teacher":
         raise HTTPException(status_code=403, detail="Only teachers can view analytics")
     
@@ -281,31 +281,34 @@ def get_analytics(current_user: User = Depends(get_current_user), db: Session = 
     # Get all students
     students = db.query(User).filter(User.role == "student").all()
     
-    # Build analytics data
-    topic_analytics = []
+    # Calculate average scores per topic
+    topic_averages = []
     
     for topic in topics:
-        student_scores = []
+        # Get all scores for this topic from all students
+        scores = []
         for student in students:
             score_obj = db.query(StudentTopicScore).filter(
                 StudentTopicScore.student_id == student.id,
                 StudentTopicScore.topic_id == topic.id
             ).order_by(StudentTopicScore.id.desc()).first()
             
-            score = score_obj.score if score_obj else 0
-            student_scores.append({
-                "student_id": student.id,
-                "student_name": student.username,
-                "score": score
-            })
+            if score_obj:
+                scores.append(score_obj.score)
         
-        topic_analytics.append({
+        # Calculate average
+        if scores:
+            average_score = sum(scores) / len(scores)
+        else:
+            average_score = 0.0
+        
+        topic_averages.append({
             "topic_id": topic.id,
             "topic_name": topic.name,
-            "student_scores": student_scores
+            "average_score": round(average_score, 2)
         })
     
-    return {"topics": topic_analytics}
+    return {"topic_averages": topic_averages}
 
 if __name__ == "__main__":
     import uvicorn

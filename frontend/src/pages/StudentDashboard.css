@@ -123,58 +123,6 @@
   color: #c62828;
 }
 
-.scores-display {
-  margin-top: 30px;
-  padding-top: 30px;
-  border-top: 2px solid #e0e0e0;
-}
-
-.scores-display h3 {
-  color: #333;
-  margin-bottom: 20px;
-  font-size: 1.3rem;
-}
-
-.scores-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  gap: 20px;
-}
-
-.score-card {
-  background: #f9f9f9;
-  border-radius: 8px;
-  padding: 20px;
-  border: 1px solid #e0e0e0;
-}
-
-.score-topic {
-  font-weight: 600;
-  color: #333;
-  margin-bottom: 10px;
-  font-size: 1rem;
-}
-
-.score-value {
-  font-size: 2rem;
-  font-weight: bold;
-  color: #667eea;
-  margin-bottom: 10px;
-}
-
-.score-bar {
-  width: 100%;
-  height: 8px;
-  background: #e0e0e0;
-  border-radius: 4px;
-  overflow: hidden;
-}
-
-.score-bar-fill {
-  height: 100%;
-  background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
-  transition: width 0.3s;
-}
 
 .instructions-list {
   list-style: none;

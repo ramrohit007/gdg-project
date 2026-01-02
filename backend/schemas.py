@@ -24,16 +24,11 @@ class AnswerUpload(BaseModel):
     message: str
     scores: dict
 
-class TopicScore(BaseModel):
-    student_id: int
-    student_name: str
-    score: float
-
-class TopicAnalytics(BaseModel):
+class TopicAverage(BaseModel):
     topic_id: int
     topic_name: str
-    student_scores: List[TopicScore]
+    average_score: float
 
 class AnalyticsResponse(BaseModel):
-    topics: List[TopicAnalytics]
+    topic_averages: List[TopicAverage]
 

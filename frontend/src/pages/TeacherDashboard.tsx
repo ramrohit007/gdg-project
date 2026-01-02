@@ -4,14 +4,10 @@ import axios from 'axios'
 import AnalyticsChart from '../components/AnalyticsChart'
 import './TeacherDashboard.css'
 
-interface TopicAnalytics {
+interface TopicAverage {
   topic_id: number
   topic_name: string
-  student_scores: Array<{
-    student_id: number
-    student_name: string
-    score: number
-  }>
+  average_score: number
 }
 
 function TeacherDashboard() {
@@ -19,7 +15,7 @@ function TeacherDashboard() {
   const [code, setCode] = useState<string | null>(null)
   const [codeExpires, setCodeExpires] = useState<string | null>(null)
   const [loading, setLoading] = useState(false)
-  const [analytics, setAnalytics] = useState<TopicAnalytics[]>([])
+  const [analytics, setAnalytics] = useState<TopicAverage[]>([])
   const [uploading, setUploading] = useState(false)
   const [uploadMessage, setUploadMessage] = useState('')
 
@@ -56,7 +52,7 @@ function TeacherDashboard() {
   const fetchAnalytics = async () => {
     try {
       const response = await axios.get('/api/teacher/analytics')
-      setAnalytics(response.data.topics)
+      setAnalytics(response.data.topic_averages)
     } catch (error) {
       console.error('Error fetching analytics:', error)
     }
@@ -149,17 +145,34 @@ function TeacherDashboard() {
         </div>
 
         <div className="dashboard-section">
-          <h2>Student Performance Analytics</h2>
+          <h2>Class Performance Analytics</h2>
+          <p className="section-description">
+            Average scores per topic across all students in the class.
+          </p>
           {analytics.length === 0 ? (
             <p className="no-data">No analytics data available. Upload a syllabus and wait for students to submit answers.</p>
           ) : (
-            <div className="analytics-grid">
-              {analytics.map((topic) => (
-                <div key={topic.topic_id} className="chart-card">
-                  <h3>{topic.topic_name}</h3>
-                  <AnalyticsChart data={topic.student_scores} />
-                </div>
-              ))}
+            <div className="analytics-container">
+              <AnalyticsChart data={analytics} />
+              <div className="analytics-table">
+                <h3>Topic Average Scores</h3>
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Topic</th>
+                      <th>Average Score</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {analytics.map((topic) => (
+                      <tr key={topic.topic_id}>
+                        <td>{topic.topic_name}</td>
+                        <td>{topic.average_score.toFixed(2)}%</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
             </div>
           )}
         </div>
